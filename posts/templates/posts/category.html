@@ -1,0 +1,56 @@
+{% extends 'posts/base.html' %}
+{% block main %}
+<!-- Page Header-->
+
+<header class="masthead" style="background-image: url('assets/img/home-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>{{category.title}}</h1>
+                    <span class="subheading">بخش دسته بندی</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <!-- Post preview-->
+            <h3 class="alert alert-primary text-center">  دسته بندی : {{category.title}}</h3>
+            <div class="post-preview">
+                <a href="{url posts:post  detail.slug}">
+                    <!-- Divider-->
+                    {%for p in post_get %}
+                    <hr class="my-4" />
+                    <a href="/home/{{p.id}}"><h2 class="post-title">{{p.title}}</h2></a>
+                    <img src="*" alt="*" width="1" height="1">
+                    <h3 class="post-subtitle">{{p.description|linebreaksbr|truncatewords:50}}</h3>
+                        <div>
+                        {{p.jpublish}}
+                        </div>
+                        <div>
+                        {% for cat in p.published.all %}
+                        <a href="/category/{{cat.slug}}">#{{cat.title}}</a>
+                        {%endfor%}
+                        </div>
+                        <p class="post-meta">
+                            Posted by
+                        <a href="#!">Behzadhosseizade</a>
+                    </p>
+                    {%endfor%}
+            <hr class="my-4" />
+            <!-- Pager-->
+            {% if post_get.has_previous %}
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="{% url 'posts:category' category.slug post_get.previous_page_number %}">پست های جدید &rarr;</a></div>
+            {% endif %}
+            {% if post_get.has_next %}
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="{% url 'posts:category' category.slug post_get.next_page_number %}">پست های قدیمی &larr;</a></div>
+            {% endif %}
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="/">خانه </a></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

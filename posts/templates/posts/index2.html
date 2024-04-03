@@ -1,0 +1,12 @@
+{% load static %}
+{% for p in post_get %}
+<article>
+  {% if p.thumbnail %}
+     <img src="{{p.thumbnail.url}}">
+{% else %}
+     <img src="{% static 'posts/images/symbol.png' %}" width="50" height="50">
+{% endif %}
+  <h5>{{p.title}}</h5>
+  <p>{{p.description}}</p>
+</article>
+{% endfor %}
